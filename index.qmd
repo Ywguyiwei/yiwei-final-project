@@ -1,0 +1,56 @@
+---
+title: "Overview"
+number-sections: false
+toc: false
+---
+
+# [💉]{style="font-size: 1.9rem;"} Maternal Vaccination in the United States
+
+The goal of this dashboard is to provide a clear, approachable view of vaccination coverage among pregnant women in the United States. Using survey data from the CDC Pregnancy Vaccination Surveillance System, the site focuses on how coverage for recommended vaccines varies across time, geography, and demographic groups.
+
+## Snapshot of the Dataset {.section-title}
+
+::: callout
+This dashboard uses the dataset **“Vaccination Coverage among Pregnant Women”**, which contains **4,798 observations** collected from **2012–2021**. Each row represents a combination of vaccine, geographic unit, survey year, and demographic group, with a coverage percentage, 95% confidence interval, and sample size.
+
+These measures provide a consistent basis for comparing maternal vaccination patterns.
+:::
+
+<hr class="section-divider" />
+
+## Data and Population {.section-title}
+
+::: callout
+The dataset includes individuals who were pregnant during each survey year. Coverage estimates are available for **Influenza** and **Tdap**, reported at both **national** and **state** levels.
+
+Demographic groups include race/ethnicity, age, and indicators of healthcare access, allowing patterns and disparities in maternal vaccination to be examined.
+:::
+
+<hr class="section-divider" />
+
+## What You Can Explore Here {.section-title}
+
+::: callout
+This dashboard highlights key patterns in maternal vaccination, including:
+
+-   how coverage changes over time\
+-   differences between Influenza and Tdap\
+-   variation across states\
+-   variation across demographic groups
+
+The emphasis is on clear, interpretable visual summaries rather than complex models.
+:::
+
+<hr class="section-divider" />
+
+## How the Dashboard Is Organized {.section-title}
+
+::: callout
+**Introduction** – background on maternal vaccination and the surveillance system.
+
+**Methods** – data preparation and analytic choices.
+
+**Data Analysis** – interactive graphics and tables summarizing coverage over time, by geography, and by demographic group.
+
+**Conclusions** – main findings and considerations for interpretation.
+:::

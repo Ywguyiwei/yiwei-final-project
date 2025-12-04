@@ -1,0 +1,34 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Maternal Vaccination in the United States"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Overview
+      - href: introduction.qmd
+        text: Introduction
+      - href: analysis.qmd
+        text: Data Analysis
+      - href: methods.qmd
+        text: Methods
+      - href: about.qmd
+        text: Conclusions
+      - href: references.qmd
+        text: References
+    right:
+      - href: https://github.com/Ywguyiwei
+        icon: github
+
+format:
+  html:
+    theme: darkly
+    css: styles.css
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    code-fold: true
+
+editor: visual

@@ -1,0 +1,19 @@
+---
+title: "Conclusions"
+number-sections: false
+toc: false
+---
+
+### 📌 Conclusion
+
+Key takeaways:
+
+::: methods-callout
+-   **Tdap vaccination coverage has increased substantially over time**, stabilizing at consistently higher levels than influenza.\
+-   **Influenza coverage remains lower and more variable**, likely reflecting seasonal timing and differences in how flu vaccines are delivered in prenatal care.\
+-   **Disparities are evident across race/ethnicity and insurance status**, with Black, non-Hispanic pregnant individuals showing persistently lower coverage.\
+-   **State participation varies**, and non-reporting states limit full geographic comparison.\
+-   **Overall, maternal vaccination uptake remains uneven**, highlighting opportunities to improve access, strengthen provider recommendations, and reduce inequities.
+:::
+
+These findings help identify where progress is strong and where targeted public health efforts are still needed.

@@ -1,0 +1,228 @@
+/* ======================================
+   GLOBAL DARK APPLE-STYLE THEME
+   ====================================== */
+
+body {
+  background-color: #050712 !important;
+  color: #e5e7eb !important;
+  font-size: 18px !important;
+  line-height: 1.7;
+  font-weight: 400;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+               "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+}
+
+main.content {
+  max-width: 960px;
+  margin: 0 auto 4rem;
+  padding: 0 1.5rem;
+}
+
+/* Headings */
+
+h1, h2, h3, h4 {
+  color: #f9fafb !important;
+  font-weight: 650 !important;
+}
+
+h1 {
+  font-size: 2rem !important;              /* slightly smaller so it fits one line */
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.8rem !important;
+  white-space: nowrap !important;          /* keep on one line */
+}
+
+h2.section-title {
+  font-size: 1.7rem !important;
+  margin-top: 2.2rem !important;
+  margin-bottom: 0.3rem !important;
+}
+
+/* Paragraphs */
+
+p {
+  margin-bottom: 0.8rem;
+}
+
+/* ======================================
+   NAVBAR (TRANSLUCENT DARK)
+   ====================================== */
+
+.navbar, .navbar-dark {
+  background: rgba(3, 7, 18, 0.9) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid #111827 !important;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #f9fafb !important;
+}
+
+.navbar-nav .nav-link {
+  color: #9ca3af !important;
+  padding: 0.75rem 1rem !important;
+  font-size: 0.95rem;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #f9fafb !important;
+}
+
+.navbar-nav .nav-link.active {
+  color: #facc15 !important;
+  border-bottom: 2px solid #facc15;
+  border-radius: 0;
+}
+
+/* ======================================
+   CALLOUTS AS CLEAN DARK CARDS
+   ====================================== */
+
+.callout {
+  border-left-width: 0 !important;
+  border-radius: 18px !important;
+  border: 1px solid #2a2f3a !important;
+  padding: 1.4rem 1.6rem !important;
+  margin-top: 0.8rem !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.55);
+  font-size: 1.05rem !important;          /* bigger card text */
+  line-height: 1.65 !important;
+  color: #e5e7eb !important;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+/* Hover animation: subtle lift & glow */
+.callout:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
+  border-color: #4b5563 !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Hide default header bar & icons */
+.callout-header,
+.callout-icon {
+  display: none !important;
+}
+
+/* Ensure all variants look the same neutral style */
+.callout-note,
+.callout-important,
+.callout-tip,
+.callout-warning {
+  border-color: #2a2f3a !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* ======================================
+   SECTION DIVIDER
+   ====================================== */
+
+.section-divider {
+  border: 0;
+  height: 1px;
+  margin: 2.2rem 0 1.6rem;
+  background: linear-gradient(to right,
+    rgba(148, 163, 184, 0),
+    rgba(148, 163, 184, 0.7),
+    rgba(148, 163, 184, 0));
+}
+
+h1 {
+  font-size: 2.2rem !important;        /* slightly larger now */
+  white-space: nowrap !important;      /* force one line */
+  overflow: hidden !important;
+  text-overflow: ellipsis;             /* protects layout on small screens */
+}
+
+.callout strong {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+/* ============================================
+   BALANCED SIZE FOR TEXT INSIDE CALLOUT CARDS
+   ============================================ */
+
+.callout,
+.callout p,
+.callout ul,
+.callout li,
+.callout strong {
+  font-size: 1.18rem !important;      /* Two sizes smaller than before */
+  line-height: 1.72 !important;        /* Smooth spacing */
+  color: #f1f5f9 !important;
+}
+
+.callout {
+  padding: 1.8rem 2rem !important;     /* Slightly tighter padding */
+}
+
+.callout ul {
+  padding-left: 1.6rem !important;
+  margin-bottom: 1.2rem !important;
+}
+
+.callout li {
+  margin-bottom: 0.55rem !important;
+}
+
+.callout p:last-of-type {
+  margin-top: 1.2rem !important;
+}
+
+
+/* ============================================
+   MAKE INTRO PARAGRAPH MATCH CALLOUT TEXT SIZE
+   ============================================ */
+
+/* Only affects the paragraph(s) directly under h1 */
+h1 + p,
+h1 + p + p {
+  font-size: 1.18rem !important;
+  line-height: 1.75 !important;
+  color: #f1f5f9 !important;
+  max-width: 75ch;    /* keeps line length readable */
+}
+
+
+/* ======================================
+   METHODS CALLOUT (Apple micro-card)
+   ====================================== */
+
+.methods-callout {
+  border-radius: 18px;
+  border: 1px solid #2a2f3a;
+  padding: 1.5rem 1.7rem;
+  margin-top: 0.8rem;
+
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #e5e7eb;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.methods-callout:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 55px rgba(0, 0, 0, 0.65);
+  border-color: #374151;
+}

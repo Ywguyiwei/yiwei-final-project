@@ -1,0 +1,22 @@
+---
+title: "Methods"
+number-sections: false
+toc: false
+---
+
+# 🧪 Data Processing Workflow
+
+Key steps included:
+
+::: methods-callout
+-   **Cleaning and standardizing variables** across years and states\
+-   **Removing missing or incomplete records**\
+-   **Renaming columns** for clarity\
+-   **Selecting the largest sample-size estimate** when multiple rows existed\
+-   **Filtering out NAs** to ensure reliable summaries\
+-   **Merging state-level estimates with U.S. map geometries**\
+-   **Creating weighted summaries** using sample size\
+-   **Visualizing trends** with heatmaps, bar charts, and maps
+:::
+
+These steps ensure consistent, interpretable comparisons across vaccines, years, and demographic groups.

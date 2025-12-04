@@ -1,0 +1,53 @@
+---
+title: "Introduction"
+number-sections: false
+toc: false
+---
+
+Maternal vaccination plays a critical role in protecting pregnant individuals and their infants from severe infectious diseases. Because newborns are too young to be fully vaccinated, immunization during pregnancy provides an essential layer of early protection through the transfer of maternal antibodies.
+
+This dashboard uses data from the CDC Pregnancy Vaccination Surveillance System to examine coverage for two recommended maternal vaccines: **Influenza** and **Tdap**.
+
+## [💡]{style="font-size: 1.6rem; margin-right: 6px;"}Why Focus on Maternal Vaccination? {.section-title}
+
+::: callout
+Influenza and pertussis (whooping cough) can cause serious illness in pregnant individuals and infants. Vaccination during pregnancy protects the pregnant person from severe outcomes and allows antibodies to pass to the baby, providing early immunity in the first months of life.
+
+Despite strong recommendations, maternal vaccination coverage remains uneven across states and demographic groups. Understanding these patterns helps guide public health outreach and improve vaccine access.
+:::
+
+<hr class="section-divider" />
+
+## What Are Influenza and Tdap? {.section-title}
+
+::::: callout
+::: {style="border:1px solid #2a2f3a; border-radius:14px; padding:1.3rem; margin-bottom:1.5rem;"}
+### [🦠]{style="font-size:1.3rem;"} **Influenza (Flu)**
+
+Influenza is a contagious respiratory virus that may lead to pneumonia, hospitalization, and severe complications during pregnancy. Physiologic changes during pregnancy increase susceptibility to severe illness.
+
+The influenza vaccine is recommended in **any trimester**, providing protection for both the pregnant individual and the newborn.
+:::
+
+::: {style="border:1px solid #2a2f3a; border-radius:14px; padding:1.3rem;"}
+### [🛡️]{style="font-size:1.3rem;"} **Tdap (Tetanus, Diphtheria, Pertussis)**
+
+Tdap vaccination protects against pertussis, a respiratory infection that can be critical in young infants. Maternal antibodies help protect infants until they are eligible for routine vaccination at 2 months.
+
+The Tdap vaccine is recommended during **each pregnancy**, ideally between **27–36 weeks**.
+:::
+:::::
+
+## Formulated Questions {.section-title}
+
+::: callout
+Using the CDC Pregnancy Vaccination Surveillance dataset, this dashboard focuses on the following key questions:
+
+-   **How has vaccination coverage changed over time?**
+-   **How do Influenza and Tdap coverage compare?**
+-   **How do vaccination rates differ across demographic groups** such as age and race/ethnicity?
+-   **Which groups have the lowest vaccination uptake?**
+-   How did influenza vaccination among pregnant women change from year to year? How did Tdap vaccination change across years?
+
+These questions provide a clear framework for exploring patterns in maternal vaccination coverage.
+:::

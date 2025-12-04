@@ -1,0 +1,11 @@
+---
+title: "References"
+number-sections: false
+toc: false
+---
+
+### 📚 Sources used in this dashboard:
+
+::: methods-callout
+-   “Vaccination Coverage among Pregnant Women \| Data \| Centers for Disease Control and Prevention.” *Data.cdc.gov*, data.cdc.gov/Pregnancy-Vaccination/Vaccination-Coverage-among-Pregnant-Women/h7pm-wmjc/about_data.
+:::
