@@ -47,7 +47,7 @@ Using the CDC Pregnancy Vaccination Surveillance dataset, this dashboard focuses
 -   **How do Influenza and Tdap coverage compare?**
 -   **How do vaccination rates differ across demographic groups** such as age and race/ethnicity?
 -   **Which groups have the lowest vaccination uptake?**
--   How did influenza vaccination among pregnant women change from year to year? How did Tdap vaccination change across years?
+-   **How did influenza vaccination among pregnant women change from year to year? How did Tdap vaccination change across years?**
 
 These questions provide a clear framework for exploring patterns in maternal vaccination coverage.
 :::

@@ -226,3 +226,12 @@ h1 + p + p {
   box-shadow: 0 24px 55px rgba(0, 0, 0, 0.65);
   border-color: #374151;
 }
+
+
+.analysis-subtitle {
+  font-size: 1.8rem !important;      /* Bigger than normal text */
+  font-weight: 650 !important;
+  color: #f9fafb !important;
+  margin-top: 1.4rem !important;
+  margin-bottom: 1rem !important;
+}

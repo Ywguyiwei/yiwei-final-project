@@ -162,24 +162,21 @@ ul.task-list li input[type="checkbox"] {
 <p>Key steps included:</p>
 <div class="methods-callout">
 <ul>
-<li><strong>Cleaning and standardizing variables</strong> across years and states<br>
-</li>
-<li><strong>Removing missing or incomplete records</strong><br>
-</li>
-<li><strong>Renaming columns</strong> for clarity<br>
-</li>
-<li><strong>Selecting the largest sample-size estimate</strong> when multiple rows existed<br>
-</li>
-<li><strong>Filtering out NAs</strong> to ensure reliable summaries<br>
-</li>
-<li><strong>Merging state-level estimates with U.S. map geometries</strong><br>
-</li>
-<li><strong>Creating weighted summaries</strong> using sample size<br>
-</li>
-<li><strong>Visualizing trends</strong> with heatmaps, bar charts, and maps</li>
+<li>This analysis uses data from the CDC PRAMS Internet Panel Survey, which reports influenza and Tdap vaccination coverage among pregnant individuals in participating U.S. states.</li>
+<li>The dataset was cleaned by standardizing variable names, removing incomplete observations, and restricting analyses to full calendar years (2012–2022).</li>
+<li>Because PRAMS participation varies by year and not all states are represented, a state-level subset (<code>vacc_state</code>) was created to support geographic comparisons and mapping.</li>
+<li>National trends were estimated by calculating sample-size–weighted mean coverage across states for each year, ensuring that states with larger numbers of respondents contributed proportionally to the overall estimates.</li>
+<li>Demographic analyses summarized vaccination coverage across racial/ethnic groups and age categories to identify differences in uptake.</li>
+<li>Multiple visualization approaches were used, including line plots to examine temporal trends, bar charts for demographic comparisons, heatmaps for year-by-vaccine patterns, and U.S. maps to illustrate state-level variation.</li>
+<li>All data processing and visualization were conducted in R using the <strong>tidyverse</strong>, <strong>ggplot2</strong>, <strong>ggprism</strong>, and <strong>maps</strong> packages.</li>
 </ul>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">🔧<strong>Limitations</strong></h2>
+<ul>
+<li>State participation varies annually, and some states contribute no data at all. In 2021, for example, the dataset is missing 22 states. This incomplete geographic coverage limits the ability to estimate true nationwide vaccination rates and may bias comparisons across regions or over time. Additionally, the dataset is self-reported and therefore subject to recall bias.</li>
+</ul>
+</section>
 </div>
-<p>These steps ensure consistent, interpretable comparisons across vaccines, years, and demographic groups.</p>
 
 
 </section>

@@ -11,7 +11,7 @@ The goal of this dashboard is to provide a clear, approachable view of vaccinati
 ## Snapshot of the Dataset {.section-title}
 
 ::: callout
-This dashboard uses the dataset **“Vaccination Coverage among Pregnant Women”**, which contains **4,798 observations** collected from **2012–2021**. Each row represents a combination of vaccine, geographic unit, survey year, and demographic group, with a coverage percentage, 95% confidence interval, and sample size.
+This dashboard uses the dataset **“Vaccination Coverage among Pregnant Women”**, which contains **4,798 observations** collected from **2012–2022**. Each row represents a combination of vaccine, geographic unit, survey year, and demographic group, with a coverage percentage, 95% confidence interval, and sample size.
 
 These measures provide a consistent basis for comparing maternal vaccination patterns.
 :::

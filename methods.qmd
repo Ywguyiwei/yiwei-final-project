@@ -9,14 +9,15 @@ toc: false
 Key steps included:
 
 ::: methods-callout
--   **Cleaning and standardizing variables** across years and states\
--   **Removing missing or incomplete records**\
--   **Renaming columns** for clarity\
--   **Selecting the largest sample-size estimate** when multiple rows existed\
--   **Filtering out NAs** to ensure reliable summaries\
--   **Merging state-level estimates with U.S. map geometries**\
--   **Creating weighted summaries** using sample size\
--   **Visualizing trends** with heatmaps, bar charts, and maps
-:::
+-   This analysis uses data from the CDC PRAMS Internet Panel Survey, which reports influenza and Tdap vaccination coverage among pregnant individuals in participating U.S. states.
+-   The dataset was cleaned by standardizing variable names, removing incomplete observations, and restricting analyses to full calendar years (2012–2022).
+-   Because PRAMS participation varies by year and not all states are represented, a state-level subset (`vacc_state`) was created to support geographic comparisons and mapping.
+-   National trends were estimated by calculating sample-size–weighted mean coverage across states for each year, ensuring that states with larger numbers of respondents contributed proportionally to the overall estimates.
+-   Demographic analyses summarized vaccination coverage across racial/ethnic groups and age categories to identify differences in uptake.
+-   Multiple visualization approaches were used, including line plots to examine temporal trends, bar charts for demographic comparisons, heatmaps for year-by-vaccine patterns, and U.S. maps to illustrate state-level variation.
+-   All data processing and visualization were conducted in R using the **tidyverse**, **ggplot2**, **ggprism**, and **maps** packages.
 
-These steps ensure consistent, interpretable comparisons across vaccines, years, and demographic groups.
+## 🔧**Limitations**
+
+-   State participation varies annually, and some states contribute no data at all. In 2021, for example, the dataset is missing 22 states. This incomplete geographic coverage limits the ability to estimate true nationwide vaccination rates and may bias comparisons across regions or over time. Additionally, the dataset is self-reported and therefore subject to recall bias.
+:::
