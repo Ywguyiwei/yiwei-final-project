@@ -4,18 +4,24 @@ number-sections: false
 toc: false
 ---
 
-# 🧪 Data Processing Workflow
+# 🧪 Data Processing Workflow 
 
-Key steps included:
+EDA:
 
 ::: methods-callout
 -   This analysis uses data from the CDC PRAMS Internet Panel Survey, which reports influenza and Tdap vaccination coverage among pregnant individuals in participating U.S. states.
--   The dataset was cleaned by standardizing variable names, removing incomplete observations, and restricting analyses to full calendar years (2012–2022).
--   Because PRAMS participation varies by year and not all states are represented, a state-level subset (`vacc_state`) was created to support geographic comparisons and mapping.
--   National trends were estimated by calculating sample-size–weighted mean coverage across states for each year, ensuring that states with larger numbers of respondents contributed proportionally to the overall estimates.
--   Demographic analyses summarized vaccination coverage across racial/ethnic groups and age categories to identify differences in uptake.
--   Multiple visualization approaches were used, including line plots to examine temporal trends, bar charts for demographic comparisons, heatmaps for year-by-vaccine patterns, and U.S. maps to illustrate state-level variation.
--   All data processing and visualization were conducted in R using the **tidyverse**, **ggplot2**, **ggprism**, and **maps** packages.
+
+-    CDC “Vaccination Coverage Among Pregnant Women” dataset was imported into R and performing an initial structural review. This included checking the dataset size, inspecting column names, examining variable types, and viewing both the first and last rows to understand how observations were formatted. We then evaluated key variables—such as vaccine type, geography, survey year, demographic dimensions, sample sizes, and reported coverage values—to confirm that they matched expectations based on the CDC documentation.
+
+-   Next, the dataset was cleaned and standardized . Reported vaccination estimates contained non-numeric entries such as `"NR"` or `"NR*"`, which indicate values that were *not reported* due to small sample size. These were converted to missing values (`NA`) using `parse_number()`, while the original rows were retained so that missingness patterns could be analyzed. Core variables (e.g., year, estimate, sample size) were converted into appropriate numeric formats, and categorical variables were recoded as factors.
+
+-   To understand dataset completeness, we counted the number of missing values, examined which states or years lacked data, and identified that not all U.S. states participate in the CDC’s Internet Panel Surveys. This missingness motivated caution in interpreting national or state-level averages.
+
+-    distributions of key variables were reviewed such as influenza and Tdap coverage, demographic group coverage, and variation across states—to check for skewness, outliers, and data consistency. These exploratory plots allowed us to verify that values fell within reasonable ranges (0–100%) and aligned with CDC-reported national trends.
+
+-   Based on this groundwork, a set of core analysis questions was formulated to examine temporal trends in vaccination uptake, differences between influenza and Tdap coverage, and disparities across demographic groups. Initial exploration involved generating simple visual summaries—including histograms, boxplots, and trend lines—to identify major patterns in the data. Once these preliminary results appeared consistent with expectations, the analyses were refined through the use of sample-size–weighted averages, enhanced visualization design, and comparison against publicly reported CDC estimates to ensure accuracy and coherence
+
+    ------------------------------------------------------------------------
 
 ## 🔧**Limitations**
 

@@ -27,10 +27,13 @@ vacc_raw <- read_csv("~/Desktop/Vaccination_Coverage_among_Pregnant_Women_202512
 ```{r message=FALSE, warning=FALSE}
 #| echo: false
 colnames(vacc_raw)
+kable(
+  data.frame(Columns = colnames(vacc_raw)),
+  caption = "Column Names in vacc_raw"
+)
 ```
 
 ```{r message=FALSE, warning=FALSE}
-#| echo: false
  vacc_clean <- vacc_raw |>
   dplyr::rename(
     vaccine         = Vaccine,
@@ -39,34 +42,34 @@ colnames(vacc_raw)
     year            = `Survey Year/Influenza Season`,
     dimension_type  = `Dimension Type`,
     dimension       = Dimension,
-    estimate        = `Estimate (%)`,
     ci              = `95% CI (%)`,
     sample_size     = `Sample Size`
   ) |>
   mutate(
     year        = as.integer(year),
-    estimate    = as.numeric(estimate),
+    estimate    = parse_number(`Estimate (%)`),
     sample_size = as.integer(sample_size),
     vaccine        = factor(vaccine),
     geography_type = factor(geography_type),
     dimension_type = factor(dimension_type)
-  ) |>
-  filter(
-    !is.na(estimate),
-    !is.na(sample_size),
-    !is.na(year)
-  )
+  ) 
+
 
 ```
 
-```{r message=FALSE, warning=FALSE}
-#| echo: false
-nr_total <- vacc_raw |>
-  dplyr::filter(`Estimate (%)` %in% c("NR", "NR*")) |>
-  nrow()
 
-nr_total
+```{r}
+sum(vacc_raw$`Estimate (%)` %in% c("NR", "NR*"))
 ```
+
+
+```{r}
+sum(is.na(vacc_clean$estimate))
+```
+
+
+The raw dataset has 476 NR (not reported). NR = Not Reported, meaning the vaccination coverage estimate was not provided for that state/year due to small sample size or data suppression, but they are treated as NAs. 
+
 
 ```{r message=FALSE, warning=FALSE}
 dataset_summary <- vacc_clean |>
@@ -101,7 +104,17 @@ kable(dimension_table, caption = "Number of Observations by Dimension Type")
 
 ```{r message=FALSE, warning=FALSE}
 variable_list <- tibble(
-  Variable = names(vacc_clean),
+  Variable = c(
+    "vaccine",
+    "geography_type",
+    "geography",
+    "year",
+    "dimension_type",
+    "dimension",
+    "estimate",
+    "ci",
+    "sample_size"
+  ),
   Description = c(
     "Vaccine type (Influenza or Tdap)",
     "Geography level (National or State)",
@@ -116,6 +129,7 @@ variable_list <- tibble(
 )
 
 kable(variable_list, caption = "Variables Included in the Cleaned Dataset")
+
 ```
 
 ```{r message=FALSE, warning=FALSE}
@@ -136,82 +150,104 @@ vaccine_table <- vacc_clean |>
 kable(vaccine_table, caption = "Number of Observations by Vaccine Type")
 ```
 
-Distribution of State-Level Coverage: Influenza
+```{r}
+colnames(vacc_clean)
+```
+
+
+Distribution of State-Level Coverage: 
+
+- Influenza
 
 ```{r message=FALSE, warning=FALSE}
 vacc_state <- vacc_clean %>%
   filter(geography_type == "States")
+
 infl_state <- vacc_state %>%
-filter(vaccine == "Influenza")
+  filter(vaccine == "Influenza")
+ggplot(na.omit(infl_state), aes(x = estimate)) +
+  geom_histogram(
+    bins = 20,
+    fill = "#4E79A7",
+    color = "white",
+    linewidth = 0.2,
+    alpha = 0.9
+  ) +
+  geom_vline(
+    xintercept = mean(infl_state$estimate, na.rm = TRUE),
+    linetype  = "dashed",
+    linewidth = 0.7
+  ) +
+  labs(
+    title = "Distribution of State-Level Influenza Vaccination Coverage",
+    x = "Coverage (%)",
+    y = "Number of States"
+  ) +
+  theme_prism(base_size = 12) +
+  theme(
+    plot.title = element_text(size = 14, face = "bold")
+  )
 
-ggplot(infl_state, aes(x = estimate)) +
-geom_histogram(
-bins = 20,
-fill = "#4E79A7",
-color = "white",
-linewidth = 0.2,
-alpha = 0.9
-) +
-geom_vline(
-xintercept = mean(infl_state$estimate, na.rm = TRUE),
-linetype = "dashed",
-linewidth = 0.7
-) +
-labs(
-title = "Distribution of State-Level Influenza Vaccination Coverage",
-x = "Coverage (%)",
-y = "Number of States"
-) +
-theme_prism(base_size = 12) +
-theme(
-plot.title = element_text(size = 14, face = "bold")
-)
 
 ```
 
-State-level influenza vaccination coverage among pregnant women shows a fairly wide distribution across the dataset, with most observations falling in the mid-range.
+The histogram shows the distribution of state-level influenza vaccination coverage among pregnant women across all available years. Coverage estimates range from approximately 15% to 95%, with most states clustering between 45% and 75%. The distribution is roughly bell-shaped, indicating that most observations fall near the middle rather than at the extremes.
 
-Tdap:
+The dashed vertical line marks the mean state-level vaccination coverage, which is around 60%. A large concentration of states appears just above and below this average, suggesting moderate variability across states but no extreme outliers. Lower coverage values (<30%) and very high values (>80%) occur rarely.
+
+Overall, the plot indicates that while vaccination coverage varies, most states achieve influenza vaccination rates within a relatively consistent mid-range.
+
+
+
+
+- Tdap:
 
 ```{r message=FALSE, warning=FALSE}
+vacc_state <- vacc_clean %>%
+  filter(geography_type == "States")
+
 tdap_state <- vacc_state %>%
-filter(vaccine == "Tdap")
-
-ggplot(tdap_state, aes(x = estimate)) +
-geom_histogram(
-bins = 20,
-fill = "#E15759", 
-color = "white",
-linewidth = 0.2,
-alpha = 0.9
-) +
-geom_vline(
-xintercept = mean(tdap_state$estimate, na.rm = TRUE),
-linetype = "dashed",
-linewidth = 0.7
-) +
-labs(
-title = "Distribution of State-Level Tdap Vaccination Coverage",
-x = "Coverage (%)",
-y = "Number of States"
-) +
-theme_prism(base_size = 12) +
-theme(
-plot.title = element_text(size = 14, face = "bold")
-)
+  filter(vaccine == "Tdap")
+ggplot(na.omit(tdap_state), aes(x = estimate)) +
+  geom_histogram(
+    bins = 20,
+    fill = "#E15759",
+    color = "white",
+    linewidth = 0.2,
+    alpha = 0.9
+  ) +
+  geom_vline(
+    xintercept = mean(tdap_state$estimate, na.rm = TRUE),
+    linetype = "dashed",
+    linewidth = 0.7
+  ) +
+  labs(
+    title = "Distribution of State-Level Tdap Vaccination Coverage",
+    x = "Coverage (%)",
+    y = "Number of States"
+  ) +
+  theme_prism(base_size = 12) +
+  theme(
+    plot.title = element_text(size = 14, face = "bold")
+  )
 ```
 
-In contrast, Tdap vaccination coverage is generally shifted toward higher levels and appears more tightly clustered. The Tdap histogram shows a concentration of observations at relatively high coverage percentages, with fewer state–year combinations in the low-coverage range.
+This histogram displays the distribution of Tdap vaccination coverage among U.S. states across all years in the dataset. Coverage values range broadly, from below 10% in some early years to nearly 100% in later years. The distribution is noticeably right-shifted, indicating that Tdap vaccination rates are generally higher than influenza vaccination rates across states. A large concentration of observations falls between 65% and 85%, and the mean coverage (indicated by the dashed line) is roughly 75%. This suggests that most states achieve relatively high Tdap vaccination rates among pregnant women. Lower coverage values (<30%) appear only rarely and likely represent older survey years when Tdap recommendations for pregnancy were still being established.
 
-How do Influenza and Tdap coverage compare?
+Overall, the distribution shows substantial improvement over time, with the majority of state-level estimates clustered in the upper range of the coverage spectrum.
+
+
+
+- How do Influenza and Tdap coverage compare?
 
 ```{r message=FALSE, warning=FALSE}
 
-  ggplot(vacc_clean, aes(x = vaccine, y = estimate, fill = vaccine)) +
+ ggplot(vacc_clean, aes(x = vaccine, y = estimate, fill = vaccine)) +
   geom_boxplot(
     outlier.alpha = 0.20, 
     outlier.size  = 1,
-    alpha         = 0.9
+    alpha         = 0.9,
+    na.rm         = TRUE    
   ) +
   labs(
     title = "Influenza vs Tdap Vaccination Coverage",
@@ -230,12 +266,15 @@ How do Influenza and Tdap coverage compare?
 
 ```
 
-Tdap median coverage: higher. Influenza: lower and more variable
+This boxplot compares state-level vaccination coverage for Influenza and Tdap among pregnant women across all survey years. Influenza coverage shows a median around 60%, with values generally ranging from 50% to 70%. The distribution is moderately spread out, and several lower outliers (below 30%) represent early years when influenza vaccination uptake among pregnant women was lower. In contrast, Tdap coverage is noticeably higher, with a median close to 75% and most values falling between 65% and 85%. 
 
-Vaccination Coverage Over Time
+Overall, the comparison highlights that Tdap vaccination coverage is substantially higher and more consistent across states than influenza vaccination coverage.
+
+- Vaccination Coverage Over Time
 
 ```{r message=FALSE, warning=FALSE}
 trend <- vacc_clean %>%
+  mutate(year = as.numeric(year)) %>%   
   group_by(year) %>%
   summarise(mean_coverage = mean(estimate, na.rm = TRUE))
 
@@ -252,11 +291,10 @@ ggplot(trend, aes(x = year, y = mean_coverage)) +
   theme_prism(base_size = 14) +
   theme(plot.title = element_text(size = 18, face = "bold"))
 
-
-
 ```
 
-Maternal vaccination coverage shows a gradual upward trend from 2012 to around 2019, followed by slight fluctuation in later years (2020–2021). This pattern reflects changing vaccine recommendations, improvements in outreach, and disruptions during the pandemic period.
+Maternal vaccination coverage shows a gradual upward trend from 2012 to around The line plot shows the average maternal vaccination coverage in the United States from 2012 to 2022. Coverage increased steadily from about 42% in 2012 to a peak of nearly 70% between 2018 and 2020. After 2020, coverage declined slightly but remained relatively high, stabilizing around 65–67% in 2021–2022. Each point represents the mean vaccination coverage for that survey year, excluding missing values but retaining them in the dataset. Overall, the trend indicates substantial improvement in maternal vaccination uptake over the past decade, followed by a modest decrease in the most recent years.
+
 
 ```{r message=FALSE, warning=FALSE}
 trend_data <- vacc_clean %>%
@@ -295,60 +333,91 @@ ggplot(trend_data, aes(x = year, y = mean_coverage, color = vaccine, group = vac
     plot.title   = element_text(size = 15, face = "bold")
   )
 ```
+The plot shows the average vaccination coverage for Influenza and Tdap among pregnant women in the United States from 2012 to 2022. Influenza coverage begins around 48% in 2012, rises gradually to a peak of about 64–65% by 2019–2020, and then declines modestly after 2020. In contrast, Tdap coverage starts much lower—around 17% in 2012—but increases sharply, reaching more than 70% by 2016 and remaining consistently high (approximately 75–80%) through the rest of the decade. Overall, Tdap shows a rapid and sustained increase, while influenza shows moderate gains followed by a slight decline in recent years.
 
-Tdap Coverage Increased Rapidly and Reached High, Stable Levels and Influenza Coverage Is Lower, More Variable, and Plateaued.
 
-How do vaccination rates differ across demographic groups (age & race/ethnicity)?
+
+- How do vaccination rates differ across demographic groups (age & race/ethnicity)?
 
 Age:
 
 ```{r message=FALSE, warning=FALSE}
 age_summary <- vacc_clean %>%
-  filter(dimension_type == "Age",
-         vaccine %in% c("Influenza", "Tdap")) %>%
+  filter(
+    dimension_type == "Age",
+    vaccine %in% c("Influenza", "Tdap")
+  ) %>%
   group_by(vaccine, dimension) %>%
   summarise(
-    mean_coverage   = mean(estimate, na.rm = TRUE),
-    median_coverage = median(estimate, na.rm = TRUE),
-    n               = n()
+    mean_coverage   = mean(estimate, na.rm = TRUE),   
+    median_coverage = median(estimate, na.rm = TRUE), 
+    n               = n(),                             
+    .groups = "drop"
   )
 
-kable(age_summary, digits = 1,
-      caption = "Vaccination Coverage by Age Group and Vaccine")
+kable(
+  age_summary,
+  digits = 1,
+  caption = "Vaccination Coverage by Age Group and Vaccine"
+)
+
 ```
 
 ```{r message=FALSE, warning=FALSE}
-age_data <- vacc_clean %>% filter(dimension_type == "Age")
+age_data <- vacc_clean %>%
+  filter(dimension_type == "Age") %>%
+  mutate(
+    estimate = as.numeric(estimate),
+    dimension_clean = case_when(
+      grepl("18", dimension) & grepl("24", dimension) ~ "18–24",
+      grepl("25", dimension) & grepl("34", dimension) ~ "25–34",
+      grepl("35", dimension)                         ~ "35+",
+      grepl("≥18", dimension)                        ~ "≥18",
+      TRUE                                           ~ dimension
+    ),
+    dimension_clean = factor(dimension_clean,
+                             levels = c("18–24", "25–34", "35+","≥18"))
+  )
 
-ggplot(age_data, aes(x = dimension, y = estimate)) +
-  geom_boxplot(fill = "#00A9A5", alpha = 0.85) +
+ggplot(age_data, aes(x = dimension_clean, y = estimate)) +
+  geom_boxplot(fill = "#00A9A5", alpha = 0.85, na.rm = TRUE) +
   labs(
     title = "Vaccination Coverage Across Age Groups",
     x = "Age Group",
     y = "Coverage (%)"
   ) +
   theme_prism(base_size = 14) +
-  theme(plot.title = element_text(size = 18, face = "bold"))
+  theme(
+    plot.title = element_text(size = 18, face = "bold"),
+    axis.text.x = element_text(size = 12)
+  )
 
 ```
 
-Coverage is lowest among the youngest pregnant individuals (18–24) and gradually increases with age. Older groups (30–39) consistently show higher uptake.
+The boxplot compares vaccination coverage across maternal age groups. Overall, coverage tends to increase with age. The 18–24 group shows the lowest median coverage and the greatest variability, with several low outliers. Coverage improves in the 25–34 and 35+ groups, which exhibit higher medians and narrower interquartile ranges, indicating more consistent uptake among older pregnant individuals. Together, the distributions suggest that younger pregnant women are less consistently vaccinated, while older age groups demonstrate higher and more stable coverage levels.
 
 Race & Ethnicity:
 
 ```{r message=FALSE, warning=FALSE}
 race_summary <- vacc_clean %>%
-  filter(dimension_type == "Race and Ethnicity",
-         vaccine %in% c("Influenza", "Tdap")) %>%
+  filter(
+    dimension_type == "Race and Ethnicity",
+    vaccine %in% c("Influenza", "Tdap")
+  ) %>%
   group_by(vaccine, dimension) %>%
   summarise(
-    mean_coverage   = mean(estimate, na.rm = TRUE),
-    median_coverage = median(estimate, na.rm = TRUE),
-    n               = n()
+    mean_coverage   = mean(estimate, na.rm = TRUE),   
+    median_coverage = median(estimate, na.rm = TRUE),  
+    n_total         = n(),                             
+    n_non_missing   = sum(!is.na(estimate)),          
+    .groups = "drop"
   )
 
-kable(race_summary, digits = 1,
-      caption = "Vaccination Coverage by Race/Ethnicity and Vaccine")
+kable(
+  race_summary,
+  digits = 1,
+  caption = "Vaccination Coverage by Race/Ethnicity and Vaccine"
+)
 ```
 
 ```{r message=FALSE, warning=FALSE}
@@ -394,25 +463,24 @@ The differences between the groups are not very clear. Hispanic and White (Non-H
 Influenza vs Tdap vaccination coverage over states:
 
 ```{r message=FALSE, warning=FALSE}
-
-get_state_map <- function(vax_name) {
-  vacc_clean %>%
+get_state_map <- function(data, vax_name, year_target = 2022) {
+  data %>%
     filter(
       geography_type == "States",
       vaccine == vax_name,
-      year == 2022
+      year == year_target
     ) %>%
     group_by(geography) %>%
-    slice_max(sample_size, n = 1) %>%
+    slice_max(sample_size, n = 1, with_ties = FALSE) %>%
     ungroup() %>%
     transmute(
       state_name     = tolower(geography),
-      estimate_state = estimate
+      estimate_state = estimate   
     )
 }
 
-influenza_states <- get_state_map("Influenza")
-tdap_states      <- get_state_map("Tdap")
+influenza_states <- get_state_map(vacc_clean, "Influenza")
+tdap_states      <- get_state_map(vacc_clean, "Tdap")
 
 states_geo <- st_as_sf(maps::map("state", plot = FALSE, fill = TRUE)) %>%
   mutate(state_name = tolower(ID))
@@ -432,10 +500,10 @@ ggplot(combined_map) +
     size = 0.2
   ) +
   scale_fill_gradient(
-    low = "#FDE68A",
-    high = "#B45309",
-    na.value = "lightgray",   
-    name = "Vaccination (%)"
+    low      = "#FDE68A",
+    high     = "#B45309",
+    na.value = "lightgray",           
+    name     = "Vaccination (%)"
   ) +
   facet_wrap(~ vaccine, nrow = 1) +
   labs(
@@ -447,7 +515,8 @@ ggplot(combined_map) +
   theme(
     strip.text    = element_text(size = 15, face = "bold"),
     plot.title    = element_text(size = 22, face = "bold"),
-    plot.subtitle = element_text(size = 14)
+    plot.subtitle = element_text(size = 14),
+    plot.caption  = element_text(size = 9)
   )
 
 ```
@@ -475,7 +544,7 @@ These are the missing states from the dataset.
 
 ```{r message=FALSE, warning=FALSE}
 year_vax_summary <- vacc_clean %>%
-  filter(!is.na(year), !is.na(vaccine)) %>%
+  filter(!is.na(year), !is.na(vaccine)) %>%  
   mutate(year4 = stringr::str_extract(year, "^[0-9]{4}")) %>%
   filter(
     !is.na(year4),
@@ -484,7 +553,7 @@ year_vax_summary <- vacc_clean %>%
   ) %>%
   group_by(year4, vaccine) %>%
   summarise(
-    coverage = weighted.mean(estimate, sample_size, na.rm = TRUE),
+    coverage = weighted.mean(estimate, sample_size, na.rm = TRUE),  
     .groups = "drop"
   ) %>%
   mutate(
@@ -511,6 +580,7 @@ ggplot(year_vax_summary, aes(x = year, y = vaccine, fill = coverage)) +
     axis.text.x  = element_text(angle = 45, hjust = 1),
     plot.title   = element_text(size = 18, face = "bold")
   )
+
 ```
 
 The heatmap shows that Tdap vaccination coverage increased rapidly from 2012 to 2016 and remained high through 2022, while influenza coverage rose more slowly and fluctuated, with a decline after 2020. Overall, Tdap consistently demonstrated higher uptake than influenza among pregnant women.

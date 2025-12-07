@@ -159,16 +159,16 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="data-processing-workflow" class="level1">
 <h1>🧪 Data Processing Workflow</h1>
-<p>Key steps included:</p>
+<p>EDA:</p>
 <div class="methods-callout">
 <ul>
-<li>This analysis uses data from the CDC PRAMS Internet Panel Survey, which reports influenza and Tdap vaccination coverage among pregnant individuals in participating U.S. states.</li>
-<li>The dataset was cleaned by standardizing variable names, removing incomplete observations, and restricting analyses to full calendar years (2012–2022).</li>
-<li>Because PRAMS participation varies by year and not all states are represented, a state-level subset (<code>vacc_state</code>) was created to support geographic comparisons and mapping.</li>
-<li>National trends were estimated by calculating sample-size–weighted mean coverage across states for each year, ensuring that states with larger numbers of respondents contributed proportionally to the overall estimates.</li>
-<li>Demographic analyses summarized vaccination coverage across racial/ethnic groups and age categories to identify differences in uptake.</li>
-<li>Multiple visualization approaches were used, including line plots to examine temporal trends, bar charts for demographic comparisons, heatmaps for year-by-vaccine patterns, and U.S. maps to illustrate state-level variation.</li>
-<li>All data processing and visualization were conducted in R using the <strong>tidyverse</strong>, <strong>ggplot2</strong>, <strong>ggprism</strong>, and <strong>maps</strong> packages.</li>
+<li><p>This analysis uses data from the CDC PRAMS Internet Panel Survey, which reports influenza and Tdap vaccination coverage among pregnant individuals in participating U.S. states.</p></li>
+<li><p>CDC “Vaccination Coverage Among Pregnant Women” dataset was imported into R and performing an initial structural review. This included checking the dataset size, inspecting column names, examining variable types, and viewing both the first and last rows to understand how observations were formatted. We then evaluated key variables—such as vaccine type, geography, survey year, demographic dimensions, sample sizes, and reported coverage values—to confirm that they matched expectations based on the CDC documentation.</p></li>
+<li><p>Next, the dataset was cleaned and standardized . Reported vaccination estimates contained non-numeric entries such as <code>"NR"</code> or <code>"NR*"</code>, which indicate values that were <em>not reported</em> due to small sample size. These were converted to missing values (<code>NA</code>) using <code>parse_number()</code>, while the original rows were retained so that missingness patterns could be analyzed. Core variables (e.g., year, estimate, sample size) were converted into appropriate numeric formats, and categorical variables were recoded as factors.</p></li>
+<li><p>To understand dataset completeness, we counted the number of missing values, examined which states or years lacked data, and identified that not all U.S. states participate in the CDC’s Internet Panel Surveys. This missingness motivated caution in interpreting national or state-level averages.</p></li>
+<li><p>distributions of key variables were reviewed such as influenza and Tdap coverage, demographic group coverage, and variation across states—to check for skewness, outliers, and data consistency. These exploratory plots allowed us to verify that values fell within reasonable ranges (0–100%) and aligned with CDC-reported national trends.</p></li>
+<li><p>Based on this groundwork, a set of core analysis questions was formulated to examine temporal trends in vaccination uptake, differences between influenza and Tdap coverage, and disparities across demographic groups. Initial exploration involved generating simple visual summaries—including histograms, boxplots, and trend lines—to identify major patterns in the data. Once these preliminary results appeared consistent with expectations, the analyses were refined through the use of sample-size–weighted averages, enhanced visualization design, and comparison against publicly reported CDC estimates to ensure accuracy and coherence</p>
+<hr></li>
 </ul>
 <section id="limitations" class="level2">
 <h2 class="anchored" data-anchor-id="limitations">🔧<strong>Limitations</strong></h2>
