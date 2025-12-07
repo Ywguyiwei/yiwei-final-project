@@ -235,3 +235,23 @@ h1 + p + p {
   margin-top: 1.4rem !important;
   margin-bottom: 1rem !important;
 }
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+/* Floating motion for emoji */
+.vax-float-emoji {
+  font-size: 3.5rem;     /* make the emoji bigger */
+  animation: vaxFloat 3s ease-in-out infinite;
+}
+
+/* Smooth up–down animation */
+@keyframes vaxFloat {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-8px); }
+  100% { transform: translateY(0px); }
+}
+

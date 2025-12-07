@@ -4,7 +4,13 @@ number-sections: false
 toc: false
 ---
 
-# [💉]{style="font-size: 1.9rem;"} Maternal Vaccination in the United States
+::: hero-main-title
+Maternal Vaccination in the United States
+:::
+
+::: {.hero-visual .vax-float-emoji}
+💉
+:::
 
 The goal of this dashboard is to provide a clear, approachable view of vaccination coverage among pregnant women in the United States. Using survey data from the CDC Pregnancy Vaccination Surveillance System, the site focuses on how coverage for recommended vaccines varies across time, geography, and demographic groups.
 
