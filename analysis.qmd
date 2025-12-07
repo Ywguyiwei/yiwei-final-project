@@ -152,10 +152,14 @@ kable(vaccine_table, caption = "Number of Observations by Vaccine Type")
 
 ```{r}
 colnames(vacc_clean)
+kable(
+  data.frame(Column_Name = colnames(vacc_clean)),
+  caption = "Column Names in vacc_clean"
+)
 ```
 
 
-Distribution of State-Level Coverage: 
+- Distribution of State-Level Coverage: 
 
 - Influenza
 
@@ -535,12 +539,29 @@ missing_by_year <- vacc_state %>%
     missing_states = list(setdiff(all_states, present_states[[1]])),
     n_missing = length(missing_states[[1]])
   )
+formatted_missing_by_year <- missing_by_year %>%
+  mutate(
+    missing_states = sapply(missing_states, function(x)
+      paste0(paste(head(x, 3), collapse = ", "), " ... (", length(x), " missing)")
+    ),
+    present_states = NULL   # optional: remove present_states to make table tiny
+  )
 
-missing_by_year
+kable(
+  formatted_missing_by_year,
+  caption = "Missing State Data by Year",
+  align = "c",
+  col.names = c("Year", "Missing States", "# Missing")
+)
 
 ```
 
 These are the missing states from the dataset.
+
+
+- Tdap vaccination & Influenza vaccination coverage in 2022 
+
+
 
 ```{r message=FALSE, warning=FALSE}
 year_vax_summary <- vacc_clean %>%
@@ -560,13 +581,11 @@ year_vax_summary <- vacc_clean %>%
     year = factor(year4, levels = as.character(2012:2022))
   )
 
-print(year_vax_summary)
-
 ggplot(year_vax_summary, aes(x = year, y = vaccine, fill = coverage)) +
   geom_tile(color = "white") +
   scale_fill_gradient(
-    low  = "#FDE68A",
-    high = "#B45309",
+    low  = "#EBD4FF",   
+    high = "#7A3E9D",  
     name = "Coverage (%)"
   ) +
   labs(
@@ -578,9 +597,8 @@ ggplot(year_vax_summary, aes(x = year, y = vaccine, fill = coverage)) +
   theme_minimal(base_size = 14) +
   theme(
     axis.text.x  = element_text(angle = 45, hjust = 1),
-    plot.title   = element_text(size = 18, face = "bold")
+    plot.title   = element_text(size = 14, face = "bold")
   )
-
 ```
 
 The heatmap shows that Tdap vaccination coverage increased rapidly from 2012 to 2016 and remained high through 2022, while influenza coverage rose more slowly and fluctuated, with a decline after 2020. Overall, Tdap consistently demonstrated higher uptake than influenza among pregnant women.
