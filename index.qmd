@@ -1,13 +1,17 @@
 ---
 title: "Overview"
-author: yiwei Gu 
+author: Yiwei Gu 
 number-sections: false
 toc: false
 ---
 
+::::: hero-main-title
+:::: {.hero-main-title style="font-size: 50px;"}
 ::: hero-main-title
 Maternal Vaccination in the United States
 :::
+::::
+:::::
 
 ::: {.hero-visual .vax-float-emoji}
 💉

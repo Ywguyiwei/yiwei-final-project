@@ -255,3 +255,8 @@ h1 + p + p {
   100% { transform: translateY(0px); }
 }
 
+.hero-main-title {
+  font-size: 35px;        /* or any size you want */
+  font-weight: 800;       /* bold */
+  white-space: nowrap;    /* prevents line break */
+}
